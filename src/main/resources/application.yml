@@ -1,0 +1,10 @@
+# about Spring
+#spring:
+#  profiles:
+#    active: dev
+
+# about log
+logging:
+  config: classpath:logback.xml
+  level:
+    com.cainz.pacbatchec2: trace
