@@ -25,6 +25,7 @@ artifacts:
     - target/*.jar
     - scripts/server_start.sh
     - scripts/server_stop.sh
+    - scripts/server_validate.sh
     - appspec.yml
 
   discard-paths: yes
