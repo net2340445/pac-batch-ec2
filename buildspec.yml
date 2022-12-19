@@ -29,7 +29,7 @@ phases:
       - mkdir -p /usr/lib/graalvm
       - mv /tmp/graalvm-ce-${GRAALVM_JVM_VERSION}-${GRAALVM_VERSION}/* /usr/lib/graalvm/
       - rm -rf /tmp/*
-      - wget -O /tmp/apache-maven-3.8.6-bin.zip https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip > /dev/null
+      - wget -q -O /tmp/apache-maven-3.8.6-bin.zip https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip > /dev/null
       - unzip -d /tmp/ /tmp/apache-maven-3.8.6-bin.zip > /dev/null
       - mkdir -p /usr/bin/maven
       - mv /tmp/apache-maven-3.8.6/* /usr/bin/maven/
