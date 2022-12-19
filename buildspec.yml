@@ -19,14 +19,26 @@ phases:
     commands:
       - yum remove java-* -y -q
       - yum update -y -q && yum install -y -q java-11-amazon-corretto && yum clean all
-      - wget -O /tmp/apache-maven-3.8.6-bin.zip https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip
-      - unzip -d /tmp/ /tmp/apache-maven-3.8.6-bin.zip
+      - export GRAALVM_VERSION="22.2.0"
+      - export GRAALVM_JVM_VERSION="java11"
+      - export GRAALVM_ARCH="amd64"
+      - export GRAALVM_ARGS=""
+      - echo ${GRAALVM_JVM_VERSION}
+      - yum update -y -q && yum clean all
+      - curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-${GRAALVM_JVM_VERSION}-linux-${GRAALVM_ARCH}-${GRAALVM_VERSION}.tar.gz -o /tmp/graalvm.tar.gz > /dev/null
+      - tar -zxf /tmp/graalvm.tar.gz -C /tmp/ > /dev/null
+      - mkdir -p /usr/lib/graalvm
+      - mv /tmp/graalvm-ce-${GRAALVM_JVM_VERSION}-${GRAALVM_VERSION}/* /usr/lib/graalvm/
+      - rm -rf /tmp/*
+      - wget -O /tmp/apache-maven-3.8.6-bin.zip https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip > /dev/null
+      - unzip -d /tmp/ /tmp/apache-maven-3.8.6-bin.zip > /dev/null
       - mkdir -p /usr/bin/maven
       - mv /tmp/apache-maven-3.8.6/* /usr/bin/maven/
+      - export JAVA_HOME=/usr/lib/graalvm/
       - export PATH=/usr/bin/maven/bin:${PATH}
-      - mvn -v  
+      - export PATH=${JAVA_HOME}/bin:${PATH}
+      - mvn -v
       - mvn clean package  > /dev/null
-      - pwd
       - ls -lrta
       - pwd
       - whoami
