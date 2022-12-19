@@ -45,7 +45,7 @@ phases:
       # build source
       # - mvn -v
       # - mvn clean package  > /dev/null
-      - ./mvnw clean package
+      - ./mvnw clean package > /dev/null
       # change the jar file name to all shell files
       - jarFileName=$(ls target/pac-batch-ec2-*.jar |cut -b 8-|sed '/^$/d')
       - echo ${jarFileName}
