@@ -17,13 +17,12 @@ phases:
       # ############################################# ##
   build:
     commands:
-      - yum remove java-* -y -q
-      - yum update -y -q && yum install -y -q java-11-amazon-corretto && yum clean all
       - export GRAALVM_VERSION="22.2.0"
       - export GRAALVM_JVM_VERSION="java11"
       - export GRAALVM_ARCH="amd64"
       - export GRAALVM_ARGS=""
       - echo ${GRAALVM_JVM_VERSION}
+      - yum remove java-* -y -q
       - yum update -y -q && yum clean all
       - curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-${GRAALVM_JVM_VERSION}-linux-${GRAALVM_ARCH}-${GRAALVM_VERSION}.tar.gz -o /tmp/graalvm.tar.gz > /dev/null
       - tar -zxf /tmp/graalvm.tar.gz -C /tmp/ > /dev/null
