@@ -6,7 +6,12 @@ phases:
       java: corretto11
   build:
     commands:
-      - mvn clean package
+      - mvn clean package  > /dev/null 2>&1
+      - pwd
+      - ls -lrta
+      - pwd
+      - whoami
+      - date +"%d-%m-%y" && date "+%T"
   post_build:
     commands:
       ## aws s3 cp target/*.war s3://myhhbucket23 . We don't need this step.
