@@ -4,7 +4,12 @@
 #    active: dev
 
 # about log
+bucket:
+  name: cz-psc-s3-pac-dev
+folder:
+  name: pac-batch/update/m_consolidated.csv
 logging:
   config: classpath:logback.xml
   level:
     com.cainz.pacbatchec2: trace
+
