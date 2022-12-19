@@ -42,6 +42,10 @@ phases:
       - export PATH=${JAVA_HOME}/bin:${PATH}
       - mvn -v
       - mvn clean package  > /dev/null
+      - sed -i 's/pac-batch-ec2-version-replace.jar/${jarFileName}/g' appspec.yml
+      - sed -i 's/pac-batch-ec2-version-replace.jar/${jarFileName}/g' scripts/server_start.sh
+      - sed -i 's/pac-batch-ec2-version-replace.jar/${jarFileName}/g' scripts/server_stop.sh
+      - sed -i 's/pac-batch-ec2-version-replace.jar/${jarFileName}/g' scripts/server_validate.sh
       - ls -lrta
       - pwd
       - whoami

@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: /pac-batch-ec2-0.1.jar
+  - source: /pac-batch-ec2-version-replace.jar
     destination: /root/scripts/
 
 file_exists_behavior: OVERWRITE    
