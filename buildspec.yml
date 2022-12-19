@@ -42,7 +42,7 @@ phases:
       - export PATH=${JAVA_HOME}/bin:${PATH}
       - mvn -v
       - mvn clean package  > /dev/null
-      - jarFileName=$(ls target/pac-batch-ec2-*.jar | cut -b 8-)
+      - jarFileName=$(ls target/pac-batch-ec2-*.jar | cut -b 8-|sed '/^$/d')
       - echo ${jarFileName}
       - sed -i "s#pac-batch-ec2-version-replace.jar#${jarFileName}#g" appspec.yml
       - sed -i "s#pac-batch-ec2-version-replace.jar#${jarFileName}#g" scripts/server_start.sh
