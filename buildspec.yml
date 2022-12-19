@@ -14,7 +14,11 @@ phases:
       - date +"%d-%m-%y" && date "+%T"
   post_build:
     commands:
-      ## aws s3 cp target/*.war s3://myhhbucket23 . We don't need this step.
+      ## aws s3 cp target/*.war s3://xxxxxxxxxxxx . We don't need this step.
+      - ls -lrta target/
+      - pwd
+      - whoami
+      - date +"%d-%m-%y" && date "+%T"
       - echo Build completed
 artifacts:
   files:
