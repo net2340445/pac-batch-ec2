@@ -18,7 +18,13 @@ phases:
   build:
     commands:
       - yum remove java-* -y -q
-      - yum update -y -q && yum install -y -q java-11-amazon-corretto && yum clean all    
+      - yum update -y -q && yum install -y -q java-11-amazon-corretto && yum clean all
+      - wget -O /tmp/apache-maven-3.8.6-bin.zip https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip
+      - unzip -d /tmp/ /tmp/apache-maven-3.8.6-bin.zip
+      - mkdir -p /usr/bin/maven
+      - mv /tmp/apache-maven-3.8.6/* /usr/bin/maven/
+      - export PATH=/usr/bin/maven/bin:${PATH}
+      - mvn -v  
       - mvn clean package  > /dev/null
       - pwd
       - ls -lrta
