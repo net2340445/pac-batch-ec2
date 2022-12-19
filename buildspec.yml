@@ -1,24 +1,19 @@
 version: 0.2
 
-# phases:
-#   install:
-#     runtime-versions:
-#       java: corretto11
 phases:
-  pre_build:
-    commands:
-      - ls -lrta
-      - chmod 777 -R *
-      - pwd
-      - whoami
-      - date +"%d-%m-%y" && date "+%T"
-      - myPath=$(pwd)
-      - echo ${myPath}
-      # ############################################# ##
-      # #env variables(Need change for different env) ##
-      # - jarFileName="pac-batch-ec2-0.1.jar"
-      # #env variables(Need change for different env) ##
-      # ############################################# ##
+  install:
+    runtime-versions:
+      java: corretto11
+# phases:
+#   pre_build:
+#     commands:
+#       - ls -lrta
+#       - chmod 777 -R *
+#       - pwd
+#       - whoami
+#       - date +"%d-%m-%y" && date "+%T"
+#       - myPath=$(pwd)
+#       - echo ${myPath}
   build:
     commands:
       # install java and install mvn
@@ -27,9 +22,10 @@ phases:
       # - export GRAALVM_ARCH="amd64"
       # - export GRAALVM_ARGS=""
       # - echo ${GRAALVM_JVM_VERSION}
-      - yum remove java-* -y -q
-      - yum update -y -q && yum clean all
-      - yum install java-11-amazon-corretto -y -q
+      - chmod 777 -R *
+      # - yum remove java-* -y -q
+      # - yum update -y -q && yum clean all
+      # - yum install java-11-amazon-corretto -y -q
       # - curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-${GRAALVM_JVM_VERSION}-linux-${GRAALVM_ARCH}-${GRAALVM_VERSION}.tar.gz -o /tmp/graalvm.tar.gz > /dev/null
       # - tar -zxf /tmp/graalvm.tar.gz -C /tmp/ > /dev/null
       # - mkdir -p /usr/lib/graalvm
