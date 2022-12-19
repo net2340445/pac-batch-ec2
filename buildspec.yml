@@ -16,7 +16,7 @@ phases:
       - echo ${myPath}
       # ############################################# ##
       # #env variables(Need change for different env) ##
-      - jarFileName="pac-batch-ec2-0.1.jar"
+      # - jarFileName="pac-batch-ec2-0.1.jar"
       # #env variables(Need change for different env) ##
       # ############################################# ##
   build:
