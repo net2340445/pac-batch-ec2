@@ -21,6 +21,7 @@ phases:
       # ############################################# ##
   build:
     commands:
+      # install java and install mvn
       - export GRAALVM_VERSION="22.2.0"
       - export GRAALVM_JVM_VERSION="java11"
       - export GRAALVM_ARCH="amd64"
@@ -40,8 +41,10 @@ phases:
       - export JAVA_HOME=/usr/lib/graalvm/
       - export PATH=/usr/bin/maven/bin:${PATH}
       - export PATH=${JAVA_HOME}/bin:${PATH}
+      # build source
       - mvn -v
       - mvn clean package  > /dev/null
+      # change the jar file name to all shell files
       - jarFileName=$(ls target/pac-batch-ec2-*.jar |cut -b 8-|sed '/^$/d')
       - echo ${jarFileName}
       - sed -i "s#pac-batch-ec2-version-replace.jar#${jarFileName}#g" appspec.yml
