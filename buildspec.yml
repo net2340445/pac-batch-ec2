@@ -6,7 +6,7 @@ phases:
       java: corretto11
   build:
     commands:
-      - mvn clean package  > /dev/null 2>&1
+      - mvn clean package  > /dev/null
       - pwd
       - ls -lrta
       - pwd
