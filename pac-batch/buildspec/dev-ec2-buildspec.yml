@@ -66,10 +66,10 @@ phases:
       - echo Build completed
 artifacts:
   files:
-    - target/${jarFileName}
-    - scripts/server_start.sh
-    - scripts/server_stop.sh
-    - scripts/server_validate.sh
-    - appspec.yml
+    - pac-batch/pac-batch-ec2/target/${jarFileName}
+    - pac-batch/pac-batch-ec2/scripts/server_start.sh
+    - pac-batch/pac-batch-ec2/scripts/server_stop.sh
+    - pac-batch/pac-batch-ec2/scripts/server_validate.sh
+    - pac-batch/pac-batch-ec2/appspec.yml
 
   discard-paths: yes
