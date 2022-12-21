@@ -1,0 +1,75 @@
+version: 0.2
+
+# phases:
+#   install:
+#     runtime-versions:
+#       java: corretto11
+phases:
+  pre_build:
+    commands:
+      - cd pac-batch/pac-batch-ec2
+      - ls -lrta
+      - chmod 777 -R *
+      - pwd
+      - whoami
+      - date +"%d-%m-%y" && date "+%T"
+      - myPath=$(pwd)
+      - echo ${myPath}
+      # ############################################# ##
+      # #env variables(Need change for different env) ##
+      # - jarFileName="pac-batch-ec2-0.1.jar"
+      # #env variables(Need change for different env) ##
+      # ############################################# ##
+  build:
+    commands:
+      # install java and install mvn
+      - export GRAALVM_VERSION="22.2.0"
+      - export GRAALVM_JVM_VERSION="java11"
+      - export GRAALVM_ARCH="amd64"
+      - export GRAALVM_ARGS=""
+      - echo ${GRAALVM_JVM_VERSION}
+      - yum remove java-* -y -q
+      - yum update -y -q && yum clean all
+      - curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-${GRAALVM_JVM_VERSION}-linux-${GRAALVM_ARCH}-${GRAALVM_VERSION}.tar.gz -o /tmp/graalvm.tar.gz > /dev/null
+      - tar -zxf /tmp/graalvm.tar.gz -C /tmp/ > /dev/null
+      - mkdir -p /usr/lib/graalvm
+      - mv /tmp/graalvm-ce-${GRAALVM_JVM_VERSION}-${GRAALVM_VERSION}/* /usr/lib/graalvm/
+      - rm -rf /tmp/*
+      - wget -q -O /tmp/apache-maven-3.8.6-bin.zip https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip > /dev/null
+      - unzip -d /tmp/ /tmp/apache-maven-3.8.6-bin.zip > /dev/null
+      - mkdir -p /usr/bin/maven
+      - mv /tmp/apache-maven-3.8.6/* /usr/bin/maven/
+      - export JAVA_HOME=/usr/lib/graalvm/
+      - export PATH=/usr/bin/maven/bin:${PATH}
+      - export PATH=${JAVA_HOME}/bin:${PATH}
+      # build source
+      - mvn -v
+      - mvn clean package  > /dev/null
+      # change the jar file name to all shell files
+      - jarFileName=$(ls target/pac-batch-ec2-*.jar |cut -b 8-|sed '/^$/d')
+      - echo ${jarFileName}
+      - sed -i "s#pac-batch-ec2-version-replace.jar#${jarFileName}#g" appspec.yml
+      - sed -i "s#pac-batch-ec2-version-replace.jar#${jarFileName}#g" scripts/server_start.sh
+      - sed -i "s#pac-batch-ec2-version-replace.jar#${jarFileName}#g" scripts/server_stop.sh
+      - sed -i "s#pac-batch-ec2-version-replace.jar#${jarFileName}#g" scripts/server_validate.sh
+      - ls -lrta
+      - pwd
+      - whoami
+      - date +"%d-%m-%y" && date "+%T"
+  post_build:
+    commands:
+      ## aws s3 cp target/*.war s3://xxxxxxxxxxxx . We don't need this step.
+      - ls -lrta target/
+      - pwd
+      - whoami
+      - date +"%d-%m-%y" && date "+%T"
+      - echo Build completed
+artifacts:
+  files:
+    - target/${jarFileName}
+    - scripts/server_start.sh
+    - scripts/server_stop.sh
+    - scripts/server_validate.sh
+    - appspec.yml
+
+  discard-paths: yes
